@@ -10,9 +10,11 @@ export const revalidate = 3600;
 // Generate static params for all posts
 export async function generateStaticParams() {
   const { posts } = await getPosts(100);
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  return posts
+    .filter((post) => post.slug && post.slug.trim() !== '')
+    .map((post) => ({
+      slug: post.slug,
+    }));
 }
 
 // Generate metadata for SEO

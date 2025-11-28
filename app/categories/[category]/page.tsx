@@ -7,9 +7,11 @@ export const revalidate = 3600;
 
 export async function generateStaticParams() {
   const categories = await getCategories();
-  return categories.map((category) => ({
-    category: encodeURIComponent(category),
-  }));
+  return categories
+    .filter((category) => category && category.trim() !== '')
+    .map((category) => ({
+      category: encodeURIComponent(category),
+    }));
 }
 
 export async function generateMetadata({ params }: { params: { category: string } }) {
